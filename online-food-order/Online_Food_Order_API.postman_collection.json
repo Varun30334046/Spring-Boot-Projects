@@ -1,0 +1,507 @@
+{
+  "info": {
+    "_postman_id": "a5e8c14b-7f22-48a1-9db5-8c7e63b39210",
+    "name": "Online Food Order System API",
+    "description": "Comprehensive Postman collection for the Online Food Order System Spring Boot REST API. Includes all 6 core CRUD operations (GET all, GET by ID, POST, PUT, PATCH, DELETE) and complete negative test cases for Bean Validation and Exception Handling.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Positive Tests (Core 6 Operations)",
+      "item": [
+        {
+          "name": "1. Add New Order (POST)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Varun\",\n  \"foodItem\": \"Chicken Biryani\",\n  \"quantity\": 2,\n  \"price\": 250.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders"]
+            },
+            "description": "Creates a new food order with auto-generated orderId. Expected Status: 201 Created."
+          },
+          "response": []
+        },
+        {
+          "name": "2. Add Another Order (POST)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Sneha\",\n  \"foodItem\": \"Paneer Tikka\",\n  \"quantity\": 1,\n  \"price\": 180.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders"]
+            },
+            "description": "Creates a second food order. Expected Status: 201 Created."
+          },
+          "response": []
+        },
+        {
+          "name": "3. Get All Orders (GET)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/orders",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders"]
+            },
+            "description": "Retrieves the list of all food orders in memory. Expected Status: 200 OK."
+          },
+          "response": []
+        },
+        {
+          "name": "4. Get Order By ID (GET)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/orders/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders", "1"]
+            },
+            "description": "Retrieves order details for ID 1. Expected Status: 200 OK."
+          },
+          "response": []
+        },
+        {
+          "name": "5. Update Order - Full (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Varun Urrinkala\",\n  \"foodItem\": \"Special Chicken Biryani\",\n  \"quantity\": 3,\n  \"price\": 350.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders", "1"]
+            },
+            "description": "Replaces all editable fields for Order ID 1. Expected Status: 200 OK."
+          },
+          "response": []
+        },
+        {
+          "name": "6. Partial Update Quantity (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 5\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders", "1"]
+            },
+            "description": "Updates only quantity for Order ID 1 without changing customerName, foodItem, or price. Expected Status: 200 OK."
+          },
+          "response": []
+        },
+        {
+          "name": "7. Partial Update Price (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 400.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders", "1"]
+            },
+            "description": "Updates only price for Order ID 1. Expected Status: 200 OK."
+          },
+          "response": []
+        },
+        {
+          "name": "8. Delete Order (DELETE)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/orders/2",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders", "2"]
+            },
+            "description": "Deletes Order ID 2. Expected Status: 200 OK with confirmation message."
+          },
+          "response": []
+        },
+        {
+          "name": "9. Get All Orders After Delete (GET)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/orders",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders"]
+            },
+            "description": "Verifies that deleted Order ID 2 is no longer in the list. Expected Status: 200 OK."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Negative Tests (Validation & Exceptions)",
+      "item": [
+        {
+          "name": "Negative 1 - Non-Existing Order ID (404 Not Found)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/orders/999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders", "999"]
+            },
+            "description": "Attempts to fetch an order that does not exist. Expected Status: 404 Not Found."
+          },
+          "response": []
+        },
+        {
+          "name": "Negative 2 - Validation: Empty Customer Name (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"\",\n  \"foodItem\": \"Burger\",\n  \"quantity\": 1,\n  \"price\": 120.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders"]
+            },
+            "description": "Fails @NotBlank on customerName. Expected Status: 400 Bad Request."
+          },
+          "response": []
+        },
+        {
+          "name": "Negative 3 - Validation: Empty Food Item (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Rahul\",\n  \"foodItem\": \"\",\n  \"quantity\": 1,\n  \"price\": 120.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders"]
+            },
+            "description": "Fails @NotBlank on foodItem. Expected Status: 400 Bad Request."
+          },
+          "response": []
+        },
+        {
+          "name": "Negative 4 - Validation: Quantity Zero (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Rahul\",\n  \"foodItem\": \"Burger\",\n  \"quantity\": 0,\n  \"price\": 120.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders"]
+            },
+            "description": "Fails @Min(value = 1) on quantity. Expected Status: 400 Bad Request."
+          },
+          "response": []
+        },
+        {
+          "name": "Negative 5 - Validation: Negative Quantity (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Rahul\",\n  \"foodItem\": \"Burger\",\n  \"quantity\": -3,\n  \"price\": 120.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders"]
+            },
+            "description": "Fails @Min(value = 1) on quantity. Expected Status: 400 Bad Request."
+          },
+          "response": []
+        },
+        {
+          "name": "Negative 6 - Validation: Missing Price (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Rahul\",\n  \"foodItem\": \"Burger\",\n  \"quantity\": 2\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders"]
+            },
+            "description": "Fails @NotNull on price. Expected Status: 400 Bad Request."
+          },
+          "response": []
+        },
+        {
+          "name": "Negative 7 - Validation: Negative Price (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Rahul\",\n  \"foodItem\": \"Burger\",\n  \"quantity\": 2,\n  \"price\": -50.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders"]
+            },
+            "description": "Fails @Positive on price. Expected Status: 400 Bad Request."
+          },
+          "response": []
+        },
+        {
+          "name": "Negative 8 - Validation: Zero Price (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Rahul\",\n  \"foodItem\": \"Burger\",\n  \"quantity\": 2,\n  \"price\": 0.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders"]
+            },
+            "description": "Fails @Positive on price (zero is not positive). Expected Status: 400 Bad Request."
+          },
+          "response": []
+        },
+        {
+          "name": "Negative 9 - Malformed JSON Syntax (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Varun\",\n  \"foodItem\": \n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders"]
+            },
+            "description": "Fails JSON parsing (HttpMessageNotReadableException). Expected Status: 400 Bad Request."
+          },
+          "response": []
+        },
+        {
+          "name": "Negative 10 - Invalid URL Parameter Type (400 Bad Request)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/orders/abc",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders", "abc"]
+            },
+            "description": "Fails path variable type conversion (MethodArgumentTypeMismatchException). Expected Status: 400 Bad Request."
+          },
+          "response": []
+        },
+        {
+          "name": "Negative 11 - Update Non-Existing Order PUT (404 Not Found)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Test User\",\n  \"foodItem\": \"Pizza\",\n  \"quantity\": 1,\n  \"price\": 299.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders/999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders", "999"]
+            },
+            "description": "Attempts PUT on non-existing ID 999. Expected Status: 404 Not Found."
+          },
+          "response": []
+        },
+        {
+          "name": "Negative 12 - Partial Update Invalid Quantity PATCH (400 Bad Request)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": -5\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/orders/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders", "1"]
+            },
+            "description": "Attempts PATCH with negative quantity. Fails validation on merged order. Expected Status: 400 Bad Request."
+          },
+          "response": []
+        },
+        {
+          "name": "Negative 13 - Delete Already Deleted Order (404 Not Found)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/orders/999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "orders", "999"]
+            },
+            "description": "Attempts DELETE on non-existent order. Expected Status: 404 Not Found."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

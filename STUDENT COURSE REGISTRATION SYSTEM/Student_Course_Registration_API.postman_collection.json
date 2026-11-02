@@ -1,0 +1,391 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+		"name": "Student Course Registration System API",
+		"description": "Comprehensive Postman collection for testing the Student Course Registration REST API built with Spring Boot.\nIncludes all 4 core CRUD operations plus negative validation and error scenarios.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Positive Test Cases",
+			"item": [
+				{
+					"name": "1.1 Register Student (Success - 201 Created)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentName\": \"Varun\",\n  \"courseName\": \"Java Full Stack\",\n  \"email\": \"varun@gmail.com\",\n  \"age\": 22\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"students"
+							]
+						},
+						"description": "Registers a new student with valid data. Expects HTTP 201 Created with auto-generated studentId."
+					},
+					"response": []
+				},
+				{
+					"name": "1.2 Register Another Student (Success - 201 Created)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentName\": \"Ananya\",\n  \"courseName\": \"Cloud Computing\",\n  \"email\": \"ananya@example.com\",\n  \"age\": 23\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"students"
+							]
+						},
+						"description": "Registers a second student. Expects HTTP 201 Created with auto-generated studentId = 2."
+					},
+					"response": []
+				},
+				{
+					"name": "1.3 View All Registered Students (Success - 200 OK)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"students"
+							]
+						},
+						"description": "Retrieves the full list of registered students. Expects HTTP 200 OK."
+					},
+					"response": []
+				},
+				{
+					"name": "1.4 Find Student by ID (Success - 200 OK)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"students",
+								"1"
+							]
+						},
+						"description": "Finds a registered student by their unique ID (1). Expects HTTP 200 OK."
+					},
+					"response": []
+				},
+				{
+					"name": "1.5 Delete Student Registration (Success - 200 OK)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"students",
+								"1"
+							]
+						},
+						"description": "Deletes the student registration for ID 1. Expects HTTP 200 OK with success confirmation message."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Negative Test Cases - Validation & Errors",
+			"item": [
+				{
+					"name": "2.1 Negative: Empty Student Name (400 Bad Request)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentName\": \"\",\n  \"courseName\": \"Java Full Stack\",\n  \"email\": \"varun@gmail.com\",\n  \"age\": 22\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"students"
+							]
+						},
+						"description": "Validation test: empty studentName triggers @NotBlank. Expects 400 Bad Request with 'Student name cannot be empty'."
+					},
+					"response": []
+				},
+				{
+					"name": "2.2 Negative: Invalid Email Format (400 Bad Request)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentName\": \"Varun\",\n  \"courseName\": \"Java Full Stack\",\n  \"email\": \"not-a-valid-email\",\n  \"age\": 22\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"students"
+							]
+						},
+						"description": "Validation test: malformed email string triggers @Email. Expects 400 Bad Request with 'Enter valid email'."
+					},
+					"response": []
+				},
+				{
+					"name": "2.3 Negative: Empty Email (400 Bad Request)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentName\": \"Varun\",\n  \"courseName\": \"Java Full Stack\",\n  \"email\": \"\",\n  \"age\": 22\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"students"
+							]
+						},
+						"description": "Validation test: empty email string triggers @NotBlank. Expects 400 Bad Request with 'Email cannot be empty'."
+					},
+					"response": []
+				},
+				{
+					"name": "2.4 Negative: Age Below 18 (400 Bad Request)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentName\": \"Varun\",\n  \"courseName\": \"Java Full Stack\",\n  \"email\": \"varun@gmail.com\",\n  \"age\": 16\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"students"
+							]
+						},
+						"description": "Validation test: age 16 violates @Min(18). Expects 400 Bad Request with 'Age must be above 18'."
+					},
+					"response": []
+				},
+				{
+					"name": "2.5 Negative: Missing Required Values - Age Null (400 Bad Request)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentName\": \"Varun\",\n  \"courseName\": \"Java Full Stack\",\n  \"email\": \"varun@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"students"
+							]
+						},
+						"description": "Validation test: missing age triggers @NotNull. Expects 400 Bad Request with 'Age cannot be null'."
+					},
+					"response": []
+				},
+				{
+					"name": "2.6 Negative: Non-Existing Student ID (404 Not Found)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students/999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"students",
+								"999"
+							]
+						},
+						"description": "Query for student ID 999 which does not exist. Expects HTTP 404 Not Found with StudentNotFoundException message."
+					},
+					"response": []
+				},
+				{
+					"name": "2.7 Negative: Delete Non-Existing Student (404 Not Found)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students/999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"students",
+								"999"
+							]
+						},
+						"description": "Attempt to delete student ID 999 which does not exist. Expects HTTP 404 Not Found."
+					},
+					"response": []
+				},
+				{
+					"name": "2.8 Negative: Malformed JSON Syntax (400 Bad Request)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"studentName\": \"Varun\", \"courseName\": \"Broken JSON..."
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"students"
+							]
+						},
+						"description": "Sends unclosed JSON body. Expects HTTP 400 Bad Request with HttpMessageNotReadableException message."
+					},
+					"response": []
+				},
+				{
+					"name": "2.9 Negative: Invalid Path Parameter Type (400 Bad Request)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students/abc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"students",
+								"abc"
+							]
+						},
+						"description": "Sends non-numeric string 'abc' to numeric path variable {id}. Expects HTTP 400 Bad Request with type mismatch error."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

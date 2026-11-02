@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.example.onlinefoodorder.OnlineFoodOrderApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.014 s -- in com.example.onlinefoodorder.OnlineFoodOrderApplicationTests
